@@ -1,0 +1,112 @@
+#include <Arduino.h>
+
+#include <Adafruit_NeoPixel.h>
+
+const int trigPin = 32;
+const int echoPin = 33;
+
+float duration, distance;
+
+#define PIN 18
+#define NUMPIXELS 8
+
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+void setup()
+{
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
+  pixels.begin();
+  pixels.setBrightness(50);
+  pixels.show();
+}
+
+void loop()
+{
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration * .0343) / 2;
+
+  Serial.print("Distance: ");
+  Serial.println(distance);
+
+  if (distance < 10)
+  {
+    pixels.setPixelColor(0, pixels.Color(255, 0, 0));
+    pixels.show();
+  }
+  else
+  {
+    pixels.setPixelColor(0, pixels.Color(0, 255, 0));
+    pixels.show();
+  }
+  delay(100);
+}
+//----- PRENDER APAGAR AROMA ------//
+/* const int pin = 18;
+void setup() {
+  pinMode(pin, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(pin, HIGH);
+  delay(1000);
+  digitalWrite(pin, LOW);
+  delay(1000);
+} */
+
+//----- PRENDER LED ------//
+/* #include <Adafruit_NeoPixel.h>
+
+const int trigPin = 32;
+const int echoPin = 33;
+
+float duration, distance;
+
+#define PIN 18
+#define NUMPIXELS 8
+
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+void setup()
+{
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
+  pixels.begin();
+  pixels.setBrightness(50);
+  pixels.show();
+}
+
+void loop()
+{
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration * .0343) / 2;
+
+  Serial.print("Distance: ");
+  Serial.println(distance);
+
+  if(distance < 10)
+  {
+    pixels.setPixelColor(0, pixels.Color(255, 0, 0));
+    pixels.show();
+  }
+  else
+  {
+    pixels.setPixelColor(0, pixels.Color(0, 255, 0));
+    pixels.show();
+  }
+  delay(100);
+} */
